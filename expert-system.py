@@ -1,8 +1,8 @@
-from CommandLine import CommandLine
-from FileManager import FileManager
-from Parser import Parser
-from Error import Error
-from Regex import Regex
+# from CommandLine import CommandLine
+# from FileManager import FileManager
+# from Parser import Parser
+# from Error import Error
+# from Regex import Regex
 
 
 def checkArgumentNumber():
@@ -22,6 +22,7 @@ def main():
     checkArgumentNumber()
     parseFile()
 
-
+import RPN
 if __name__ == "__main__":
-    main()
+    # main()
+    print(RPN.postfixExpressionFromInfix("A + B"))
