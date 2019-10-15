@@ -1,15 +1,11 @@
-from Error import Error
+import Display
 
 
-class FileManager:
-
-
-    @staticmethod
-    def getContentOfFileNamed(fileName):
-        try:
-            fileDescriptor = open(fileName, "r")
-            content = fileDescriptor.readlines()
-            fileDescriptor.close()
-            return content
-        except:
-            Error.showError("No such file named " + fileName)
+def getContentOfFileNamed(fileName):
+    try:
+        fileDescriptor = open(fileName, "r")
+        content = fileDescriptor.readlines()
+        fileDescriptor.close()
+        return content
+    except IOError:
+        Display.error("No such file named " + fileName)
