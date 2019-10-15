@@ -8,7 +8,7 @@ class FileManager:
     def getContentOfFileNamed(fileName):
         try:
             fileDescriptor = open(fileName, "r")
-            content = fileDescriptor.readline()
+            content = fileDescriptor.readlines()
             fileDescriptor.close()
             return content
         except:
