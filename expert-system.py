@@ -8,7 +8,6 @@ from Regex import Regex
 def checkArgumentNumber():
     if not CommandLine.numberOfArgsIsCorrect():
         Error.showError("Incorrect number of arguments.")
-        exit(0)
 
 
 def parseFile():
