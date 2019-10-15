@@ -2,6 +2,7 @@ from CommandLine import CommandLine
 from FileManager import FileManager
 from Parser import Parser
 from Error import Error
+from Regex import Regex
 
 
 def checkArgumentNumber():
