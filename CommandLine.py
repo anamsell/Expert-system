@@ -1,14 +1,9 @@
 import sys
 
 
-class CommandLine:
+def number_of_args_is_correct():
+    return len(sys.argv) == 2
 
 
-    @staticmethod
-    def numberOfArgsIsCorrect():
-        return len(sys.argv) == 2
-    
-
-    @staticmethod
-    def getFileName():
-        return sys.argv[1]
+def get_file_name():
+    return sys.argv[1]
