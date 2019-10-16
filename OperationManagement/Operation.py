@@ -37,7 +37,7 @@ class NOT(BinaryRepresentable, SingleAssociativityOperation):
         if isinstance(self.element, bool):
             return not self.element
         else:
-            return -1
+            return True
 
 
 class AND(BinaryRepresentable, DoubleAssociativityOperation):
@@ -48,8 +48,10 @@ class AND(BinaryRepresentable, DoubleAssociativityOperation):
 
         if isinstance(self.left, bool) and isinstance(self.right, bool):
             return self.left and self.right
+        elif (isinstance(self.left, bool) and self.left == False) or (isinstance(self.right, bool) and self.right == False):
+            return False
         else:
-            return -1
+            return True
 
 
 class OR(BinaryRepresentable, DoubleAssociativityOperation):
@@ -60,8 +62,10 @@ class OR(BinaryRepresentable, DoubleAssociativityOperation):
 
         if isinstance(self.left, bool) and isinstance(self.right, bool):
             return self.left or self.right
+        elif (isinstance(self.left, bool) and self.left == True) or (isinstance(self.right, bool) and self.right == True):
+            return True
         else:
-            return -1
+            return True
 
 
 class XOR(BinaryRepresentable, DoubleAssociativityOperation):
@@ -73,27 +77,28 @@ class XOR(BinaryRepresentable, DoubleAssociativityOperation):
         if isinstance(self.left, bool) and isinstance(self.right, bool):
             return ((not self.left) and self.right) or (self.left and (not self.right))
         else:
-            return -1
+            return True
 
 
 class Implies(BinaryRepresentable, DoubleAssociativityOperation):
 
     def resolved(self):
         self.left = self.left.resolved()
-        return True
+        self.right = self.right.resolved()
 
-        # if bool(self.left) and isinstance(self.right) bool(self.right):
-        #     return True
-        # else:
-        #     return -1
+        if isinstance(self.left, bool) and isinstance(self.right, bool):
+            return not (self.left == True and self.right == False)
+        else:
+            return True
 
 
 class IfAndOnlyIf(BinaryRepresentable, DoubleAssociativityOperation):
 
     def resolved(self):
         self.left = self.left.resolved()
-        return True
-        # if bool(self.left) and isinstance(self.right) :
-        #     return True
-        # else:
-        #     return -1
+        self.right = self.right.resolved()
+        
+        if isinstance(self.left, bool) and isinstance(self.right, bool):
+            return self.left == self.right
+        else:
+            return True
