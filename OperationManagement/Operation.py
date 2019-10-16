@@ -30,7 +30,32 @@ class DoubleAssociativityOperation:
     def __init__(self, left, right):
         self.left = left
         self.right = right
-         
+
+
+class NOT(BinaryRepresentable, SingleAssociativityOperation):
+
+
+    def resolved(self):
+        element = element.resolved()
+
+        if bool(element):
+            return not element
+        else:
+            return -1
+
+
+class AND(BinaryRepresentable, DoubleAssociativityOperation):
+
+
+    def resolved(self):
+        self.left = self.left.resolved()
+        self.right = self.right.resolved()
+
+        if bool(self.left) and bool(self.right):
+            return self.left and self.right
+        else:
+            return -1
+
 
 class OR(BinaryRepresentable, DoubleAssociativityOperation):
 
@@ -43,4 +68,20 @@ class OR(BinaryRepresentable, DoubleAssociativityOperation):
             return self.left or self.right
         else:
             return -1
-        
+
+
+class XOR(BinaryRepresentable, DoubleAssociativityOperation):
+
+
+    def resolved(self):
+        self.left = self.left.resolved()
+        self.right = self.right.resolved()
+
+        if bool(self.left) and bool(self.right):
+            return ((not self.left) and self.right) or (self.left and (not self.right))
+        else:
+            return -1
+
+
+# class IMPLIES(BinaryRepresentable, DoubleAssociativityOperation):
+
