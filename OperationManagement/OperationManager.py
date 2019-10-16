@@ -25,7 +25,17 @@ def operationForOperator(operator, stack):
     if not isSingleAssociativityOperator(operator):
         element1 = stack.pop()
 
-    if operator == "|":
+    if operator == "!":
+        return Operation.NOT(element2)
+    elif operator == "+":
+        return Operation.AND(element1, element2)
+    elif operator == "|":
         return Operation.OR(element1, element2)
+    elif operator == "^":
+        return Operation.XOR(element1, element2)
+    elif operator == ">":
+        return Operation.Implies(element1, element2)
+    elif operator == "=":
+        return Operation.IfAndOnlyIf(element1, element2)
         
     return None

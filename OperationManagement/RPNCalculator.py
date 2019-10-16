@@ -13,8 +13,8 @@ class RPN:
 
 
     def __formatInfixExpression(self):
-        self.infixExpression = self.infixExpression.replace("=>", ">")
         self.infixExpression = self.infixExpression.replace("<=>", "=")
+        self.infixExpression = self.infixExpression.replace("=>", ">")
         self.infixExpression = self.infixExpression.replace(" ", "")
         self.infixExpression = self.infixExpression.replace("\t", "")
 
@@ -61,4 +61,5 @@ class RPN:
                 operation = OperationManager.operationForOperator(element, stack)
                 stack.append(operation)
         
+        print(stack)
         return stack[0]

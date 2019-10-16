@@ -3,6 +3,7 @@ import FileManager
 import Parser
 import Display
 import Regex
+from Config import Config
 
 
 def checkArgumentNumber():
