@@ -16,14 +16,11 @@ def parseFile():
 
     Parser.parse(fileContent)
 
+
 def main():
     checkArgumentNumber()
     parseFile()
 
-from OperationManagement.RPNCalculator import RPN
 
 if __name__ == "__main__":
-    # main()
-    rpn = RPN("A | B | C | D")
-    print(rpn.postfixExpression)
-    print(rpn.getOperationTree())
+    main()

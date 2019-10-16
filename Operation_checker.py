@@ -32,14 +32,14 @@ def check(line):
             if not open_parenthesis(previous_char):
                 return 0
             if actual_char == '(':
-                parentheses_number +=1
+                parentheses_number += 1
         elif actual_char == ')':
             if not close_parenthesis(previous_char):
                 return 0
             if parentheses_number < 1:
                 return 0
             parentheses_number -= 1
-        elif re.search(r'[A-Z]',actual_char):
+        elif re.search(r'[A-Z]', actual_char):
             if not fact(previous_char):
                 return 0
         elif re.search(r'[|+^]', actual_char):
@@ -47,7 +47,7 @@ def check(line):
                 return 0
         elif actual_char is '!':
             if not negation(previous_char):
-                return (0)
+                return 0
         elif actual_char is '<' or actual_char is '=':
             if actual_char is '<':
                 actual_char = next(line_iter)
