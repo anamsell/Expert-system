@@ -1,3 +1,6 @@
+from Config import Config
+
+
 class BinaryRepresentable:
 
 
@@ -13,8 +16,7 @@ class Variable(BinaryRepresentable):
     
 
     def resolved(self):
-        result = Config.vars[self.variableName]
-        return True
+        return Config.get_variable_value(self.variableName)
 
 
 class SingleAssociativityOperation:
@@ -83,5 +85,26 @@ class XOR(BinaryRepresentable, DoubleAssociativityOperation):
             return -1
 
 
-# class IMPLIES(BinaryRepresentable, DoubleAssociativityOperation):
+class Implies(BinaryRepresentable, DoubleAssociativityOperation):
 
+
+    def resolved(self):
+        self.left = self.left.resolved()
+        return True
+
+        # if bool(self.left) and isinstance(self.right) bool(self.right):
+        #     return True
+        # else:
+        #     return -1
+
+
+class IfAndOnlyIf(BinaryRepresentable, DoubleAssociativityOperation):
+
+
+    def resolved(self):
+        self.left = self.left.resolved()
+        return True
+        # if bool(self.left) and isinstance(self.right) :
+        #     return True
+        # else:
+        #     return -1

@@ -3,6 +3,7 @@ import FileManager
 import Parser
 import Display
 import Regex
+from Config import Config
 
 
 def checkArgumentNumber():
@@ -23,7 +24,13 @@ def main():
 from OperationManagement.RPNCalculator import RPN
 
 if __name__ == "__main__":
-    # main()
-    rpn = RPN("A | B | C | D")
+    rpn = RPN("A <=> B")
     print(rpn.postfixExpression)
-    print(rpn.getOperationTree())
+    tree = rpn.getOperationTree()
+
+    Config.set_variable_value("A", True)
+    Config.set_variable_value("B", True)
+
+    print(tree.resolved())
+
+    main()
