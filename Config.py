@@ -17,4 +17,9 @@ class Config:
     
     @staticmethod
     def get_variable_value(variableName):
-        return Config.facts.get(variableName)
+        variable = Config.facts.get(variableName)
+
+        if variable == None:
+            return -1
+
+        return variable
