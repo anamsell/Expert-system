@@ -1,26 +1,26 @@
-from CommandLine import CommandLine
-from FileManager import FileManager
-from Parser import Parser
-from Error import Error
-from Regex import Regex
+import CommandLine
+import FileManager
+import Parser
+import Display
+import Regex
+from Config import Config
 
 
-def checkArgumentNumber():
-    if not CommandLine.numberOfArgsIsCorrect():
-        Error.showError("Incorrect number of arguments.")
+def check_argument_number():
+    if not CommandLine.number_of_args_is_correct():
+        Display.error("Incorrect number of arguments.")
 
 
-def parseFile():
-    fileName = CommandLine.getFileName()
-    fileContent = FileManager.getContentOfFileNamed(fileName)
+def parse_file():
+    file_name = CommandLine.get_file_name()
+    file_content = FileManager.get_content_of_file_named(file_name)
 
-    parser = Parser(fileContent)
-    parser.parse()
+    Parser.parse(file_content)
 
 
 def main():
-    checkArgumentNumber()
-    parseFile()
+    check_argument_number
+    parse_file()
 
 
 if __name__ == "__main__":

@@ -1,16 +1,15 @@
 import re
 
 
-class Regex:
-
-
-    @staticmethod
-    def stringStartWithPattern(string, pattern):
-        match = re.match(pattern, string)
-        return match != None
+def string_start_with_pattern(string, pattern):
+    match = re.match(pattern, string)
+    return match != None
     
 
-    @staticmethod
-    def stringContainsPattern(string, pattern):
-        search = re.search(pattern, string)
-        return search != None
+def string_contains_pattern(string, pattern):
+    search = re.search(pattern, string)
+    return search != None
+    
+
+def string_splited_with_pattern(string, pattern):
+    return re.split(pattern, string)
