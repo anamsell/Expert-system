@@ -1,5 +1,8 @@
 import re
 
+def stringStartWithPattern(string, pattern):
+    match = re.match(pattern, string)
+    return match != None
 
 def stringStartWithPattern(string, pattern):
     match = re.match(pattern, string)
