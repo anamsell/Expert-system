@@ -22,7 +22,10 @@ def main():
     checkArgumentNumber()
     parseFile()
 
-import RPN
+from OperationManagement.RPNCalculator import RPN
+
 if __name__ == "__main__":
     # main()
-    print(RPN.postfixExpressionFromInfix("A + B"))
+    rpn = RPN("A | B | C | D")
+    print(rpn.postfixExpression)
+    print(rpn.getOperationTree())
