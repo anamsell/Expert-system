@@ -26,8 +26,8 @@ def parse(file_lines):
             continue
         if not initial_facts:
             if Operation_checker.check(line):
-                rpn = RPN(line)
-                Config.operation.append(rpn.getOperationTree())
+                rpn = RPN(line.replace("!!",''))
+                Config.operation.append(rpn.get_operation_tree())
                 continue
             if is_initial_facts(line):
                 for fact in line[1:]:
@@ -41,7 +41,7 @@ def parse(file_lines):
         for query in line[1:]:
             Config.queries += query
             if not Config.facts[query]:
-                Display.warning("The Fact " + query + " is a query but not use in the rules. So he will be False")
+                Display.warning("The Fact " + query + " is a query but not use in the rules.")
         if index + 1 < len(file_lines):
             Display.warning("Queries are already get, lines after " + str(index + 1) + " are count as comment")
         break

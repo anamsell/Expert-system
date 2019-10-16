@@ -1,4 +1,3 @@
-import Regex
 import StringManager
 import OperationManagement.OperationManager as OperationManager
 from OperationManagement.Operation import Variable
@@ -6,18 +5,15 @@ from OperationManagement.Operation import Variable
 
 class RPN:
 
-
     def __init__(self, infix_expression):
         self.infix_expression = infix_expression
         self.postfix_expression = self.__get_postfix_expression()
-
 
     def __format_infix_expression(self):
         self.infix_expression = self.infix_expression.replace("<=>", "=")
         self.infix_expression = self.infix_expression.replace("=>", ">")
         self.infix_expression = self.infix_expression.replace(" ", "")
         self.infix_expression = self.infix_expression.replace("\t", "")
-
 
     def __get_postfix_expression(self):
         self.__format_infix_expression()
@@ -39,16 +35,16 @@ class RPN:
                         postfix_expression.append(last_operator)
             else:
                 while len(operator_stack) != 0 \
-                    and StringManager.is_operator(operator_stack[-1]) \
-                    and (OperationManager.priority_for_operator(operator_stack[-1]) >= OperationManager.priority_for_operator(character)):
+                        and StringManager.is_operator(operator_stack[-1]) \
+                        and (OperationManager.priority_for_operator(operator_stack[-1])
+                             >= OperationManager.priority_for_operator(character)):
                     postfix_expression.append(operator_stack.pop())
                 operator_stack.append(character)
-        
+
         while len(operator_stack) != 0:
             postfix_expression.append(operator_stack.pop())
-    
+
         return postfix_expression
-    
 
     def get_operation_tree(self):
         stack = []
@@ -60,5 +56,5 @@ class RPN:
             else:
                 operation = OperationManager.operation_for_operator(element, stack)
                 stack.append(operation)
-        
+
         return stack[0]

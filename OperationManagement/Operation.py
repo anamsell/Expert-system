@@ -3,17 +3,14 @@ from Config import Config
 
 class BinaryRepresentable:
 
-
     def resolved(self):
         raise NotImplementedError()
 
 
 class Variable(BinaryRepresentable):
 
-
-    def __init__(self, variableName):
-        self.variableName = variableName
-    
+    def __init__(self, variable_name):
+        self.variableName = variable_name
 
     def resolved(self):
         return Config.get_variable_value(self.variableName)
@@ -21,13 +18,11 @@ class Variable(BinaryRepresentable):
 
 class SingleAssociativityOperation:
 
-
     def __init__(self, element):
         self.element = element
 
 
 class DoubleAssociativityOperation:
-
 
     def __init__(self, left, right):
         self.left = left
@@ -36,18 +31,16 @@ class DoubleAssociativityOperation:
 
 class NOT(BinaryRepresentable, SingleAssociativityOperation):
 
-
     def resolved(self):
-        element = element.resolved()
+        self.element = self.element.resolved()
 
-        if isinstance(element, bool):
-            return not element
+        if isinstance(self.element, bool):
+            return not self.element
         else:
             return -1
 
 
 class AND(BinaryRepresentable, DoubleAssociativityOperation):
-
 
     def resolved(self):
         self.left = self.left.resolved()
@@ -61,7 +54,6 @@ class AND(BinaryRepresentable, DoubleAssociativityOperation):
 
 class OR(BinaryRepresentable, DoubleAssociativityOperation):
 
-
     def resolved(self):
         self.left = self.left.resolved()
         self.right = self.right.resolved()
@@ -73,7 +65,6 @@ class OR(BinaryRepresentable, DoubleAssociativityOperation):
 
 
 class XOR(BinaryRepresentable, DoubleAssociativityOperation):
-
 
     def resolved(self):
         self.left = self.left.resolved()
@@ -87,7 +78,6 @@ class XOR(BinaryRepresentable, DoubleAssociativityOperation):
 
 class Implies(BinaryRepresentable, DoubleAssociativityOperation):
 
-
     def resolved(self):
         self.left = self.left.resolved()
         return True
@@ -99,7 +89,6 @@ class Implies(BinaryRepresentable, DoubleAssociativityOperation):
 
 
 class IfAndOnlyIf(BinaryRepresentable, DoubleAssociativityOperation):
-
 
     def resolved(self):
         self.left = self.left.resolved()
