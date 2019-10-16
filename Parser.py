@@ -27,7 +27,7 @@ def parse(file_lines):
         if not initial_facts:
             if Operation_checker.check(line):
                 rpn = RPN(line)
-                Config.operation += rpn.postfixExpression
+                Config.operation.append(rpn.getOperationTree())
                 continue
             if is_initial_facts(line):
                 for fact in line[1:]:
@@ -51,3 +51,4 @@ def parse(file_lines):
         Display.error("There is no initials_facts.")
     if not Config.queries:
         Display.error('There is no queries.')
+    print(Config.operation)

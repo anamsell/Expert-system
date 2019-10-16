@@ -60,6 +60,5 @@ class RPN:
             else:
                 operation = OperationManager.operationForOperator(element, stack)
                 stack.append(operation)
-        
-        print(stack)
+
         return stack[0]
