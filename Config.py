@@ -1,5 +1,8 @@
+import string
+
+
 class Config:
     operation = list()
     initials_facts = list()
     queries = list()
-    variables = dict()
+    facts = dict.fromkeys(string.ascii_uppercase, 0)

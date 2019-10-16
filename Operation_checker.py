@@ -1,4 +1,5 @@
 import re
+from Config import Config
 
 
 def operator(previous_char):
@@ -42,6 +43,8 @@ def check(line):
         elif re.search(r'[A-Z]', actual_char):
             if not fact(previous_char):
                 return 0
+            else:
+                Config.facts[actual_char] = 1
         elif re.search(r'[|+^]', actual_char):
             if not operator(previous_char):
                 return 0
@@ -66,4 +69,3 @@ def check(line):
     if not close_parenthesis(previous_char):
         return 0
     return not parentheses_number
-
