@@ -1,21 +1,21 @@
 import Regex
 
 
-def isOperator(string):
-    return Regex.stringContainsPattern(string, "(\\!)|(\\+)|(\\|)|(\\^)|(=>)|(<=>)")
+def is_operator(string):
+    return Regex.string_contains_pattern(string, "(\\!)|(\\+)|(\\|)|(\\^)|(=>)|(<=>)")
 
 
-def isOperand(string):
-    return Regex.stringContainsPattern(string, "[A-Z]")
+def is_operand(string):
+    return Regex.string_contains_pattern(string, "[A-Z]")
 
 
-def isSpace(string):
+def is_space(string):
     return Regex.stringContainsPattern(string, "\s")
     
 
-def isOpeningBrace(string):
+def is_opening_brace(string):
     return string == "("
 
 
-def isClosingBrace(string):
+def is_closing_brace(string):
     return string == ")"

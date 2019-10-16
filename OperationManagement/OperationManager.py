@@ -1,7 +1,7 @@
 import OperationManagement.Operation as Operation
 
 
-def priorityForOperator(operator):
+def priority_for_operator(operator):
     priorities = {}
     priorities["("] = 6
     priorities["!"] = 5
@@ -14,15 +14,15 @@ def priorityForOperator(operator):
     return priorities[operator]
 
 
-def isSingleAssociativityOperator(operator):
+def is_single_associativity_operator(operator):
     return operator == "!"
 
 
-def operationForOperator(operator, stack):
+def operation_for_operator(operator, stack):
     element2 = stack.pop()
     element1 = None
 
-    if not isSingleAssociativityOperator(operator):
+    if not is_single_associativity_operator(operator):
         element1 = stack.pop()
 
     if operator == "!":
