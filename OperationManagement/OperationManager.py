@@ -2,15 +2,7 @@ import OperationManagement.Operation as Operation
 
 
 def priority_for_operator(operator):
-    priorities = {}
-    priorities["("] = 6
-    priorities["!"] = 5
-    priorities["+"] = 4
-    priorities["|"] = 3
-    priorities["^"] = 2
-    priorities[">"] = 1
-    priorities["="] = 0
-
+    priorities = {"(": 6, "!": 5, "+": 4, "|": 3, "^": 2, ">": 1, "=": 0}
     return priorities[operator]
 
 

@@ -24,12 +24,4 @@ def main():
 
 
 if __name__ == "__main__":
-    rpn = RPN("A ^ B => C")
-    tree = rpn.get_operation_tree()
-
-    Config.set_variable_value("A", True)
-    Config.set_variable_value("B", True)
-
-    print(tree.resolved())
-
     main()
