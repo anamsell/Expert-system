@@ -1,17 +1,20 @@
+import string
+
+
 class Config:
 
 
     operation = []
     initials_facts = []
     queries = []
-    variables = {}
+    facts = dict.fromkeys(string.ascii_uppercase, 0)
 
 
     @staticmethod
     def set_variable_value(variableName, value):
-        Config.variables[variableName] = value
+        Config.facts[variableName] = value
 
     
     @staticmethod
     def get_variable_value(variableName):
-        return Config.variables.get(variableName)
+        return Config.facts.get(variableName)

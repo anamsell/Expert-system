@@ -17,11 +17,11 @@ def parse_file():
 
     Parser.parse(file_content)
 
+
 def main():
     check_argument_number
     parse_file()
 
-from OperationManagement.RPNCalculator import RPN
 
 if __name__ == "__main__":
     rpn = RPN("A ^ B => C")

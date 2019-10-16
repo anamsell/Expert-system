@@ -2,6 +2,7 @@ import Display
 import re
 import Operation_checker
 from Config import Config
+from OperationManagement.RPNCalculator import RPN
 
 
 def is_initial_facts(line):
@@ -9,7 +10,7 @@ def is_initial_facts(line):
 
 
 def is_queries(line):
-    return re.search(r'^?[A-Z]+$', line)
+    return re.search(r'^\?[A-Z]+$', line)
 
 
 def parse(file_lines):
@@ -20,21 +21,34 @@ def parse(file_lines):
             line = initial_lines.split('#')[0]
         else:
             line = initial_lines
-        if not line.replace(' ', ''):
+        line = line.replace(' ', '')
+        if not line:
             continue
         if not initial_facts:
             if Operation_checker.check(line):
+                rpn = RPN(line)
+                Config.operation.append(rpn.getOperationTree())
                 continue
             if is_initial_facts(line):
-                initial_facts == 1
+                for fact in line[1:]:
+                    Config.initials_facts += fact
+                initial_facts = 1
                 continue
             Display.error("Line " + str(index + 1) + " must be a rule or initials facts.\n" + initial_lines)
         if not is_queries(line):
+            print(line)
             Display.error("Line " + str(index + 1) + " must be a queries.\n" + initial_lines)
+        for query in line[1:]:
+            Config.queries += query
+            if not Config.facts[query]:
+                Display.warning("The Fact " + query + " is a query but not use in the rules. So he will be False")
+        if index + 1 < len(file_lines):
+            Display.warning("Queries are already get, lines after " + str(index + 1) + " are count as comment")
+        break
     if not Config.operation:
         Display.error("There is no operations.")
     if not Config.initials_facts:
         Display.error("There is no initials_facts.")
     if not Config.queries:
         Display.error('There is no queries.')
-    print(initial_lines)
+    print(Config.operation)
