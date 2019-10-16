@@ -51,4 +51,3 @@ def parse(file_lines):
         Display.error("There is no initials_facts.")
     if not Config.queries:
         Display.error('There is no queries.')
-    print(Config.operation)

@@ -2,6 +2,7 @@ import CommandLine
 import FileManager
 import Parser
 import Display
+from Solver import resolve
 import Regex
 from Config import Config
 
@@ -21,6 +22,7 @@ def parse_file():
 def main():
     check_argument_number
     parse_file()
+    resolve()
 
 
 if __name__ == "__main__":
