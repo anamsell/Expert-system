@@ -7,59 +7,58 @@ from OperationManagement.Operation import Variable
 class RPN:
 
 
-    def __init__(self, infixExpression):
-        self.infixExpression = infixExpression
-        self.postfixExpression = self.__getPostfixExpression()
+    def __init__(self, infix_expression):
+        self.infix_expression = infix_expression
+        self.postfix_expression = self.__get_postfix_expression()
 
 
-    def __formatInfixExpression(self):
-        self.infixExpression = self.infixExpression.replace("<=>", "=")
-        self.infixExpression = self.infixExpression.replace("=>", ">")
-        self.infixExpression = self.infixExpression.replace(" ", "")
-        self.infixExpression = self.infixExpression.replace("\t", "")
+    def __format_infix_expression(self):
+        self.infix_expression = self.infix_expression.replace("<=>", "=")
+        self.infix_expression = self.infix_expression.replace("=>", ">")
+        self.infix_expression = self.infix_expression.replace(" ", "")
+        self.infix_expression = self.infix_expression.replace("\t", "")
 
 
-    def __getPostfixExpression(self):
-        self.__formatInfixExpression()
+    def __get_postfix_expression(self):
+        self.__format_infix_expression()
 
-        postfixExpression = []
-        operatorStack = []
+        postfix_expression = []
+        operator_stack = []
 
-        for character in self.infixExpression:
-            if StringManager.isOperand(character):
-                postfixExpression.append(character)
-            elif StringManager.isOpeningBrace(character):
-                operatorStack.append(character)
-            elif StringManager.isClosingBrace(character):
+        for character in self.infix_expression:
+            if StringManager.is_operand(character):
+                postfix_expression.append(character)
+            elif StringManager.is_opening_brace(character):
+                operator_stack.append(character)
+            elif StringManager.is_closing_brace(character):
                 while True:
-                    lastOperator = operatorStack.pop()
-                    if StringManager.isOpeningBrace(lastOperator):
+                    last_operator = operator_stack.pop()
+                    if StringManager.is_opening_brace(last_operator):
                         break
                     else:
-                        postfixExpression.append(lastOperator)
+                        postfix_expression.append(last_operator)
             else:
-                while len(operatorStack) != 0 \
-                    and StringManager.isOperator(operatorStack[-1]) \
-                    and (OperationManager.priorityForOperator(operatorStack[-1]) >= OperationManager.priorityForOperator(character)):
-                    postfixExpression.append(operatorStack.pop())
-                operatorStack.append(character)
+                while len(operator_stack) != 0 \
+                    and StringManager.is_operator(operator_stack[-1]) \
+                    and (OperationManager.priority_for_operator(operator_stack[-1]) >= OperationManager.priority_for_operator(character)):
+                    postfix_expression.append(operator_stack.pop())
+                operator_stack.append(character)
         
-        while len(operatorStack) != 0:
-            postfixExpression.append(operatorStack.pop())
+        while len(operator_stack) != 0:
+            postfix_expression.append(operator_stack.pop())
     
-        return postfixExpression
+        return postfix_expression
     
 
-    def getOperationTree(self):
+    def get_operation_tree(self):
         stack = []
 
-        for element in self.postfixExpression:
-            if StringManager.isOperand(element):
+        for element in self.postfix_expression:
+            if StringManager.is_operand(element):
                 variable = Variable(element)
                 stack.append(variable)
             else:
-                operation = OperationManager.operationForOperator(element, stack)
+                operation = OperationManager.operation_for_operator(element, stack)
                 stack.append(operation)
         
-        print(stack)
         return stack[0]

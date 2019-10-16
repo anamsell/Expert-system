@@ -1,9 +1,9 @@
 import sys
 
 
-def numberOfArgsIsCorrect():
+def number_of_args_is_correct():
     return len(sys.argv) == 2
 
 
-def getFileName():
+def get_file_name():
     return sys.argv[1]
