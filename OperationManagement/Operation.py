@@ -1,4 +1,5 @@
 from Config import Config
+from Solver import TMPConfig
 
 
 class BinaryRepresentable:
@@ -13,7 +14,7 @@ class Variable(BinaryRepresentable):
         self.variableName = variable_name
 
     def resolved(self, config):
-        return config[self.variableName]
+        return config.current_config[self.variableName]
 
 
 class SingleAssociativityOperation:
@@ -37,7 +38,7 @@ class NOT(BinaryRepresentable, SingleAssociativityOperation):
         if isinstance(r_element, bool):
             return not r_element
         else:
-            return True
+            return False
 
 
 class AND(BinaryRepresentable, DoubleAssociativityOperation):
@@ -47,11 +48,11 @@ class AND(BinaryRepresentable, DoubleAssociativityOperation):
         r_right = self.right.resolved(config)
 
         if isinstance(r_left, bool) and isinstance(r_right, bool):
-            return r_left and self.right
+            return r_left and r_right
         elif (isinstance(r_left, bool) and r_left == False) or (isinstance(r_right, bool) and r_right == False):
-            return False
-        else:
             return True
+        else:
+            return False
 
 
 class OR(BinaryRepresentable, DoubleAssociativityOperation):
@@ -65,7 +66,7 @@ class OR(BinaryRepresentable, DoubleAssociativityOperation):
         elif (isinstance(r_left, bool) and r_left == True) or (isinstance(r_right, bool) and r_right == True):
             return True
         else:
-            return True
+            return False
 
 
 class XOR(BinaryRepresentable, DoubleAssociativityOperation):
@@ -77,7 +78,7 @@ class XOR(BinaryRepresentable, DoubleAssociativityOperation):
         if isinstance(r_left, bool) and isinstance(r_right, bool):
             return ((not r_left) and r_right) or (r_left and (not r_right))
         else:
-            return True
+            return False
 
 
 class Implies(BinaryRepresentable, DoubleAssociativityOperation):
@@ -89,7 +90,7 @@ class Implies(BinaryRepresentable, DoubleAssociativityOperation):
         if isinstance(r_left, bool) and isinstance(r_right, bool):
             return not (r_left == True and r_right == False)
         else:
-            return True
+            return False
 
 
 class IfAndOnlyIf(BinaryRepresentable, DoubleAssociativityOperation):
@@ -101,4 +102,4 @@ class IfAndOnlyIf(BinaryRepresentable, DoubleAssociativityOperation):
         if isinstance(r_left, bool) and isinstance(r_right, bool):
             return r_left == r_right
         else:
-            return True
+            return False
