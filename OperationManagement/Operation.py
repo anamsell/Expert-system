@@ -3,7 +3,7 @@ from Config import Config
 
 class BinaryRepresentable:
 
-    def resolved(self):
+    def resolved(self, config):
         raise NotImplementedError()
 
 
@@ -12,8 +12,8 @@ class Variable(BinaryRepresentable):
     def __init__(self, variable_name):
         self.variableName = variable_name
 
-    def resolved(self):
-        return Config.get_variable_value(self.variableName)
+    def resolved(self, config):
+        return config[self.variableName]
 
 
 class SingleAssociativityOperation:
@@ -31,8 +31,8 @@ class DoubleAssociativityOperation:
 
 class NOT(BinaryRepresentable, SingleAssociativityOperation):
 
-    def resolved(self):
-        self.element = self.element.resolved()
+    def resolved(self, config):
+        self.element = self.element.resolved(config)
 
         if isinstance(self.element, bool):
             return not self.element
@@ -42,9 +42,9 @@ class NOT(BinaryRepresentable, SingleAssociativityOperation):
 
 class AND(BinaryRepresentable, DoubleAssociativityOperation):
 
-    def resolved(self):
-        self.left = self.left.resolved()
-        self.right = self.right.resolved()
+    def resolved(self, config):
+        self.left = self.left.resolved(config)
+        self.right = self.right.resolved(config)
 
         if isinstance(self.left, bool) and isinstance(self.right, bool):
             return self.left and self.right
@@ -56,9 +56,9 @@ class AND(BinaryRepresentable, DoubleAssociativityOperation):
 
 class OR(BinaryRepresentable, DoubleAssociativityOperation):
 
-    def resolved(self):
-        self.left = self.left.resolved()
-        self.right = self.right.resolved()
+    def resolved(self, config):
+        self.left = self.left.resolved(config)
+        self.right = self.right.resolved(config)
 
         if isinstance(self.left, bool) and isinstance(self.right, bool):
             return self.left or self.right
@@ -70,9 +70,9 @@ class OR(BinaryRepresentable, DoubleAssociativityOperation):
 
 class XOR(BinaryRepresentable, DoubleAssociativityOperation):
 
-    def resolved(self):
-        self.left = self.left.resolved()
-        self.right = self.right.resolved()
+    def resolved(self, config):
+        self.left = self.left.resolved(config)
+        self.right = self.right.resolved(config)
 
         if isinstance(self.left, bool) and isinstance(self.right, bool):
             return ((not self.left) and self.right) or (self.left and (not self.right))
@@ -82,9 +82,9 @@ class XOR(BinaryRepresentable, DoubleAssociativityOperation):
 
 class Implies(BinaryRepresentable, DoubleAssociativityOperation):
 
-    def resolved(self):
-        self.left = self.left.resolved()
-        self.right = self.right.resolved()
+    def resolved(self, config):
+        self.left = self.left.resolved(config)
+        self.right = self.right.resolved(config)
 
         if isinstance(self.left, bool) and isinstance(self.right, bool):
             return not (self.left == True and self.right == False)
@@ -94,9 +94,9 @@ class Implies(BinaryRepresentable, DoubleAssociativityOperation):
 
 class IfAndOnlyIf(BinaryRepresentable, DoubleAssociativityOperation):
 
-    def resolved(self):
-        self.left = self.left.resolved()
-        self.right = self.right.resolved()
+    def resolved(self, config):
+        self.left = self.left.resolved(config)
+        self.right = self.right.resolved(config)
         
         if isinstance(self.left, bool) and isinstance(self.right, bool):
             return self.left == self.right

@@ -3,7 +3,6 @@ import FileManager
 import Parser
 import Display
 from Solver import resolve
-import Regex
 from Config import Config
 
 
