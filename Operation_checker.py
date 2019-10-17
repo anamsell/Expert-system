@@ -44,7 +44,7 @@ def check(line):
             if not fact(previous_char):
                 return 0
             else:
-                Config.facts[actual_char] = 1
+                Config.facts[actual_char] = True
         elif re.search(r'[|+^]', actual_char):
             if not operator(previous_char):
                 return 0

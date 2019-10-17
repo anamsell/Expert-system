@@ -47,7 +47,7 @@ class AND(BinaryRepresentable, DoubleAssociativityOperation):
         r_right = self.right.resolved(config)
 
         if isinstance(r_left, bool) and isinstance(r_right, bool):
-            return r_left and self.right
+            return r_left and r_right
         elif (isinstance(r_left, bool) and r_left == False) or (isinstance(r_right, bool) and r_right == False):
             return False
         else:
