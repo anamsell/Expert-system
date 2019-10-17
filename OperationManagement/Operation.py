@@ -32,10 +32,10 @@ class DoubleAssociativityOperation:
 class NOT(BinaryRepresentable, SingleAssociativityOperation):
 
     def resolved(self, config):
-        self.element = self.element.resolved(config)
+        r_element = self.element.resolved(config)
 
-        if isinstance(self.element, bool):
-            return not self.element
+        if isinstance(r_element, bool):
+            return not r_element
         else:
             return True
 
@@ -43,12 +43,12 @@ class NOT(BinaryRepresentable, SingleAssociativityOperation):
 class AND(BinaryRepresentable, DoubleAssociativityOperation):
 
     def resolved(self, config):
-        self.left = self.left.resolved(config)
-        self.right = self.right.resolved(config)
+        r_left = self.left.resolved(config)
+        r_right = self.right.resolved(config)
 
-        if isinstance(self.left, bool) and isinstance(self.right, bool):
-            return self.left and self.right
-        elif (isinstance(self.left, bool) and self.left == False) or (isinstance(self.right, bool) and self.right == False):
+        if isinstance(r_left, bool) and isinstance(r_right, bool):
+            return r_left and self.right
+        elif (isinstance(r_left, bool) and r_left == False) or (isinstance(r_right, bool) and r_right == False):
             return False
         else:
             return True
@@ -57,12 +57,12 @@ class AND(BinaryRepresentable, DoubleAssociativityOperation):
 class OR(BinaryRepresentable, DoubleAssociativityOperation):
 
     def resolved(self, config):
-        self.left = self.left.resolved(config)
-        self.right = self.right.resolved(config)
+        r_left = self.left.resolved(config)
+        r_right = self.right.resolved(config)
 
-        if isinstance(self.left, bool) and isinstance(self.right, bool):
-            return self.left or self.right
-        elif (isinstance(self.left, bool) and self.left == True) or (isinstance(self.right, bool) and self.right == True):
+        if isinstance(r_left, bool) and isinstance(r_right, bool):
+            return r_left or r_right
+        elif (isinstance(r_left, bool) and r_left == True) or (isinstance(r_right, bool) and r_right == True):
             return True
         else:
             return True
@@ -71,11 +71,11 @@ class OR(BinaryRepresentable, DoubleAssociativityOperation):
 class XOR(BinaryRepresentable, DoubleAssociativityOperation):
 
     def resolved(self, config):
-        self.left = self.left.resolved(config)
-        self.right = self.right.resolved(config)
+        r_left = self.left.resolved(config)
+        r_right = self.right.resolved(config)
 
-        if isinstance(self.left, bool) and isinstance(self.right, bool):
-            return ((not self.left) and self.right) or (self.left and (not self.right))
+        if isinstance(r_left, bool) and isinstance(r_right, bool):
+            return ((not r_left) and r_right) or (r_left and (not r_right))
         else:
             return True
 
@@ -83,11 +83,11 @@ class XOR(BinaryRepresentable, DoubleAssociativityOperation):
 class Implies(BinaryRepresentable, DoubleAssociativityOperation):
 
     def resolved(self, config):
-        self.left = self.left.resolved(config)
-        self.right = self.right.resolved(config)
+        r_left = self.left.resolved(config)
+        r_right = self.right.resolved(config)
 
-        if isinstance(self.left, bool) and isinstance(self.right, bool):
-            return not (self.left == True and self.right == False)
+        if isinstance(r_left, bool) and isinstance(r_right, bool):
+            return not (r_left == True and r_right == False)
         else:
             return True
 
@@ -95,10 +95,10 @@ class Implies(BinaryRepresentable, DoubleAssociativityOperation):
 class IfAndOnlyIf(BinaryRepresentable, DoubleAssociativityOperation):
 
     def resolved(self, config):
-        self.left = self.left.resolved(config)
-        self.right = self.right.resolved(config)
+        r_left = self.left.resolved(config)
+        r_right = self.right.resolved(config)
         
-        if isinstance(self.left, bool) and isinstance(self.right, bool):
-            return self.left == self.right
+        if isinstance(r_left, bool) and isinstance(r_right, bool):
+            return r_left == r_right
         else:
             return True
