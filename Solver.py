@@ -17,10 +17,13 @@ class TMPConfig:
             if is_initial_fact:
                 self.current_config[variable_name] = True
             else:
-                self.current_config[variable_name] = None
+                self.current_config[variable_name] = False
     
     def goto_next_variable(self):
         self.current_var_index += 1
+    
+    def goto_previous_variable(self):
+        self.current_var_index -= 1
 
     def current_variable_value(self):
         variable_name = self.used_variables[self.current_var_index]
@@ -82,61 +85,83 @@ def generate_truth_table(tmp_config):
     true_config_copy.goto_next_variable()
     true_config = generate_truth_table(true_config_copy)
 
-    if false_config == None:
-        return true_config
-    elif true_config == None:
+    print("\n\n")
+    # print(tmp_config.used_variables[tmp_config.current_var_index])
+    # print(not tmp_config.current_varible_is_initial_fact())
+    print("Current config ", tmp_config.current_config)
+    if false_config != None:
+        print("False config ", false_config.current_config)
+    if true_config != None:
+        print("True config", true_config.current_config)
+
+    if true_config == None:
+        print("\n\n")
         return false_config
+    elif false_config == None:
+        print("\n\n")
+        return true_config
     else:
         # if false_config.is_all_true_or_false():
         #     return false_config
         # elif true_config.is_all_true_or_false():
         #     return true_config
         # else:
-        # print("\n\n")
-        # print(tmp_config.used_variables[tmp_config.current_var_index])
-        # print(tmp_config.current_config)
-        merge_configs(tmp_config, false_config, true_config)
-        # print(false_config.current_config)
-        # print(true_config.current_config)
-        # print("\n\n")
+        
+        tmp_config = merge_configs(tmp_config, false_config, true_config)
+        print(" -> New config", tmp_config.current_config)
+        print("\n\n")
         # tmp_config.set_current_variable_value(None)
         return tmp_config
 
 
 def merge_configs(tmp_config, false_config, true_config):
-    for variable_name in tmp_config.current_config:
-        current_variable_value = tmp_config.current_config[variable_name]
-        false_variable_value = false_config.current_config[variable_name]
-        true_variable_value = true_config.current_config[variable_name]
+    ambiguous_variables = []
 
-        if false_variable_value == True and true_variable_value == True:
-            if current_variable_value == None:
-                tmp_config.set_variable_value(variable_name, True)
-        elif false_variable_value == False and true_variable_value == False:
-            if current_variable_value == True:
-                tmp_config.set_variable_value(variable_name, None)
-            else:
-                tmp_config.set_variable_value(variable_name, False)
-        elif false_variable_value == False and true_variable_value == True:
-            if current_variable_value == None:
-                tmp_config.set_variable_value(variable_name, False)
-            else:
-                tmp_config.set_variable_value(variable_name, None)
-        else:
-            continue
+    for index in range(tmp_config.current_var_index, len(tmp_config.used_variables)):
+        variable_name = tmp_config.used_variables[index]
+        true_variable_value = true_config.current_config[variable_name]
+        false_variable_value = false_config.current_config[variable_name]
+
+        if isinstance(false_variable_value, bool) and isinstance(true_variable_value, bool) and false_variable_value != true_variable_value:
+            if not variable_name in Config.initials_facts:
+                ambiguous_variables.append(variable_name)
+    
+    if len(ambiguous_variables) == 0:
+        return tmp_config
+
+    new_config = copy.deepcopy(tmp_config)
+
+    print(ambiguous_variables)
+    for (index_1, variable_1) in enumerate(ambiguous_variables):
+        for (index_2, variable_2) in enumerate(ambiguous_variables):
+            if variable_1 == variable_2:
+                continue
+        
+            current_variable_name = ambiguous_variables[index_1]
+            previous_variable_name = ambiguous_variables[index_2]
+
+            false_current_variable_value = false_config.current_config[current_variable_name]
+            false_previous_variable_value = false_config.current_config[previous_variable_name]
+            true_current_variable_value = true_config.current_config[current_variable_name]
+            true_previous_variable_value = true_config.current_config[previous_variable_name]
+
+            if (false_previous_variable_value or false_current_variable_value) != False and (true_previous_variable_value or true_current_variable_value) != False:
+                new_config.current_config[current_variable_name] = None
+                new_config.current_config[previous_variable_name] = None
+    
+    return new_config
+
+
 
 
 def resolve_from_config(tmp_config):
-    print(tmp_config.current_config)
+    # print(tmp_config.current_config)
     for operation in Config.operation:
         if not operation.resolved(tmp_config):
-            print(operation)
-            print("False")
-            print("\n")
             return None
     
-    print("True")
-    print("\n")
+    # print("True")
+    # print("\n")
     return tmp_config
 
 

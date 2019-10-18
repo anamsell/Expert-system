@@ -50,7 +50,7 @@ class AND(BinaryRepresentable, DoubleAssociativityOperation):
         if isinstance(r_left, bool) and isinstance(r_right, bool):
             return r_left and r_right
         elif (isinstance(r_left, bool) and r_left == False) or (isinstance(r_right, bool) and r_right == False):
-            return True
+            return False
         else:
             return False
 
@@ -64,7 +64,7 @@ class OR(BinaryRepresentable, DoubleAssociativityOperation):
         if isinstance(r_left, bool) and isinstance(r_right, bool):
             return r_left or r_right
         elif (isinstance(r_left, bool) and r_left == True) or (isinstance(r_right, bool) and r_right == True):
-            return True
+            return False
         else:
             return False
 
