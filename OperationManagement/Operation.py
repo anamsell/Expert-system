@@ -37,7 +37,7 @@ class NOT(BinaryRepresentable, SingleAssociativityOperation):
         if isinstance(r_element, bool):
             return not r_element
         else:
-            return True
+            return None
 
 
 class AND(BinaryRepresentable, DoubleAssociativityOperation):
@@ -51,7 +51,7 @@ class AND(BinaryRepresentable, DoubleAssociativityOperation):
         elif (isinstance(r_left, bool) and r_left == False) or (isinstance(r_right, bool) and r_right == False):
             return False
         else:
-            return True
+            return None
 
 
 class OR(BinaryRepresentable, DoubleAssociativityOperation):
@@ -65,7 +65,7 @@ class OR(BinaryRepresentable, DoubleAssociativityOperation):
         elif (isinstance(r_left, bool) and r_left == True) or (isinstance(r_right, bool) and r_right == True):
             return True
         else:
-            return True
+            return None
 
 
 class XOR(BinaryRepresentable, DoubleAssociativityOperation):
@@ -77,7 +77,7 @@ class XOR(BinaryRepresentable, DoubleAssociativityOperation):
         if isinstance(r_left, bool) and isinstance(r_right, bool):
             return ((not r_left) and r_right) or (r_left and (not r_right))
         else:
-            return True
+            return None
 
 
 class Implies(BinaryRepresentable, DoubleAssociativityOperation):

@@ -5,7 +5,7 @@ import Display
 
 def fill_result_with_easy_fact(result, values):
     for value in values:
-        if value is True:
+        if value in result:
             continue
         for branch in Config.branch:
             if branch[value] is False:
@@ -19,7 +19,7 @@ def fill_result_with_easy_fact(result, values):
         else:
             result[value] = False
     for val in result:
-        del(values[val])
+        del (values[val])
 
 
 def fill_result_with_tricky_fact(value_of_tricky_fact, final_value_of_fact):
@@ -28,7 +28,7 @@ def fill_result_with_tricky_fact(value_of_tricky_fact, final_value_of_fact):
         if fact in final_value_of_fact:
             continue
         cpy = copy(other_fact_tricky)
-        del(cpy[cpy.index(fact)])
+        del (cpy[cpy.index(fact)])
         for partner in other_fact_tricky:
             for branch in Config.branch:
                 if branch[fact] is False and branch[partner] is False:
@@ -37,8 +37,8 @@ def fill_result_with_tricky_fact(value_of_tricky_fact, final_value_of_fact):
                 final_value_of_fact[fact] = "Ambiguous"
                 final_value_of_fact[partner] = "Ambiguous"
                 break
-            break
-        final_value_of_fact[fact] = None
+        else:
+            final_value_of_fact[fact] = False
 
 
 def resolve():
@@ -57,8 +57,8 @@ def resolve():
     fill_result_with_easy_fact(final_value_of_fact, starting_value_of_fact)
     if starting_value_of_fact:
         fill_result_with_tricky_fact(starting_value_of_fact, final_value_of_fact)
-    print(starting_value_of_fact)
-    print(final_value_of_fact)
+    for query in Config.queries:
+        print(query + ': ' + '\033[92m' + str(final_value_of_fact[query]) + '\033[0m')
 
 
 def test_vars(values, to_change):

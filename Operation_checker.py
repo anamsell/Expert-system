@@ -53,10 +53,16 @@ def check(line):
                 return 0
         elif actual_char is '<' or actual_char is '=':
             if actual_char is '<':
-                actual_char = next(line_iter)
+                try:
+                    actual_char = next(line_iter)
+                except:
+                    return 0
                 if actual_char is not '=':
                     return 0
-            actual_char = next(line_iter)
+            try:
+                actual_char = next(line_iter)
+            except:
+                return 0
             if actual_char is not '>':
                 return 0
             if not operator(previous_char):

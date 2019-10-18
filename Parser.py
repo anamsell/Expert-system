@@ -6,11 +6,11 @@ from OperationManagement.RPNCalculator import RPN
 
 
 def is_initial_facts(line):
-    return re.search(r'^=[A-Z]+$', line)
+    return re.search(r'^=[A-Z]*$', line)
 
 
 def is_queries(line):
-    return re.search(r'^\?[A-Z]+$', line)
+    return re.search(r'^\?[A-Z]*$', line)
 
 
 def parse(file_lines):
@@ -47,7 +47,7 @@ def parse(file_lines):
         break
     if not Config.operation:
         Display.error("There is no operations.")
-    if not Config.initials_facts:
-        Display.error("There is no initials_facts.")
     if not Config.queries:
         Display.error('There is no queries.')
+    if not Config.initials_facts:
+        Display.warning("There is no initials_facts.")
