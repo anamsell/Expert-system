@@ -1,2 +1,2 @@
 # Expert system
-Nice projec
+Nice project
