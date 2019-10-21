@@ -29,5 +29,4 @@ def operation_for_operator(operator, stack):
         return Operation.Implies(element1, element2)
     elif operator == "=":
         return Operation.IfAndOnlyIf(element1, element2)
-        
     return None

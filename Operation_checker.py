@@ -25,6 +25,7 @@ def negation(previous_char):
 def check(line):
     previous_char = '('
     parentheses_number = 0
+
     line_iter = iter(line)
     for index, actual_char in enumerate(line_iter):
         if actual_char is ' ' or actual_char is '\t':
@@ -55,13 +56,13 @@ def check(line):
             if actual_char is '<':
                 try:
                     actual_char = next(line_iter)
-                except:
+                except StopIteration:
                     return 0
                 if actual_char is not '=':
                     return 0
             try:
                 actual_char = next(line_iter)
-            except:
+            except StopIteration:
                 return 0
             if actual_char is not '>':
                 return 0

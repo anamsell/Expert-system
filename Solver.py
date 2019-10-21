@@ -1,6 +1,7 @@
 from Config import Config
 from copy import copy
 import Display
+import itertools
 
 
 def fill_result_with_easy_fact(result, values):
@@ -23,22 +24,21 @@ def fill_result_with_easy_fact(result, values):
 
 
 def fill_result_with_tricky_fact(value_of_tricky_fact, final_value_of_fact):
-    other_fact_tricky = [*value_of_tricky_fact]
-    for fact in value_of_tricky_fact:
-        if fact in final_value_of_fact:
-            continue
-        cpy = copy(other_fact_tricky)
-        del (cpy[cpy.index(fact)])
-        for partner in other_fact_tricky:
+    number_of_partner = 2
+    list_of_partners = []
+    while number_of_partner < len(value_of_tricky_fact):
+        combinations = itertools.combinations(value_of_tricky_fact, number_of_partner)
+        for combination in combinations:
             for branch in Config.branch:
-                if branch[fact] is False and branch[partner] is False:
+                for fact in combination:
+                    if branch[fact] is True:
+                        break
+                else:
                     break
             else:
-                final_value_of_fact[fact] = "Ambiguous"
-                final_value_of_fact[partner] = "Ambiguous"
-                break
-        else:
-            final_value_of_fact[fact] = False
+                list_of_partners += combination
+        number_of_partner += 1
+    print(list_of_partners)
 
 
 def resolve():
@@ -57,13 +57,16 @@ def resolve():
     fill_result_with_easy_fact(final_value_of_fact, starting_value_of_fact)
     if starting_value_of_fact:
         fill_result_with_tricky_fact(starting_value_of_fact, final_value_of_fact)
+    print("\033[94m" + str("Result:") + "\033[0m")
     for query in Config.queries:
-        print(query + ': ' + '\033[92m' + str(final_value_of_fact[query]) + '\033[0m')
+        if query not in final_value_of_fact:
+            final_value_of_fact[query] = False
+        print(query + " is " + "\033[92m" + str(final_value_of_fact[query]) + "\033[0m")
 
 
 def test_vars(values, to_change):
     for operation in Config.operation:
-        if not operation.resolved(values):
+        if operation.resolved(values) is False:
             return
     if not to_change:
         Config.branch += [values]

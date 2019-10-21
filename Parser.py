@@ -21,12 +21,12 @@ def parse(file_lines):
             line = initial_lines.split('#')[0]
         else:
             line = initial_lines
-        line = line.replace(' ', '')
+        line = re.sub(r'/s', '', line)
         if not line:
             continue
         if not initial_facts:
             if Operation_checker.check(line):
-                rpn = RPN(line.replace("!!",''))
+                rpn = RPN(line.replace("!!", ''))
                 Config.operation.append(rpn.get_operation_tree())
                 continue
             if is_initial_facts(line):
@@ -34,20 +34,22 @@ def parse(file_lines):
                     Config.initials_facts += fact
                 initial_facts = 1
                 continue
-            Display.error("Line " + str(index + 1) + " must be a rule or initials facts.\n" + initial_lines)
         if not is_queries(line):
-            print(line)
-            Display.error("Line " + str(index + 1) + " must be a queries.\n" + initial_lines)
+            Display.error("Line " + str(index + 1) + " is not a rule, initials facts and queries.\n/""" +
+                          initial_lines + "/'")
         for query in line[1:]:
             Config.queries += query
             if not Config.facts[query]:
                 Display.warning("The Fact " + query + " is a query but not use in the rules.")
         if index + 1 < len(file_lines):
-            Display.warning("Queries are already get, lines after " + str(index + 1) + " are count as comment")
+            for index_comment, comment_line in enumerate(file_lines[index+1:]):
+                if re.sub(r"/s", "", comment_line)[0] != '#':
+                    Display.warning("Queries are already get, line " + str(index + index_comment + 1) + " is count as "
+                                                                                                        "comment.")
         break
-    if not Config.operation:
-        Display.error("There is no operations.")
     if not Config.queries:
         Display.error('There is no queries.')
     if not Config.initials_facts:
         Display.warning("There is no initials_facts.")
+    if not Config.operation:
+        Display.warning("There is no operations.")
