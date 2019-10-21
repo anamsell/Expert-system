@@ -4,4 +4,4 @@ def error(message):
 
 
 def warning(message):
-    print("\033[93mWARNING:\033[0m " + message)
+    print("\033[93mWarning:\033[0m " + message)

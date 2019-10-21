@@ -19,7 +19,7 @@ def parse_file():
 
 
 def main():
-    check_argument_number
+    check_argument_number()
     parse_file()
     resolve()
 
