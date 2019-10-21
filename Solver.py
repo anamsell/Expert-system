@@ -1,5 +1,5 @@
 from Config import Config
-from copy import copy
+from copy import copy, deepcopy
 import Display
 import itertools
 
@@ -24,9 +24,9 @@ def fill_result_with_easy_fact(result, values):
 
 
 def fill_result_with_tricky_fact(value_of_tricky_fact, final_value_of_fact):
-    number_of_partner = 2
-    list_of_partners = []
-    while number_of_partner < len(value_of_tricky_fact):
+    number_of_partner = len(value_of_tricky_fact)
+    list_of_group_of_partners = []
+    while number_of_partner >= 2:
         combinations = itertools.combinations(value_of_tricky_fact, number_of_partner)
         for combination in combinations:
             for branch in Config.branch:
@@ -36,9 +36,16 @@ def fill_result_with_tricky_fact(value_of_tricky_fact, final_value_of_fact):
                 else:
                     break
             else:
-                list_of_partners += combination
-        number_of_partner += 1
-    print(list_of_partners)
+                cpy = deepcopy(list_of_group_of_partners)
+                for previous_group_of_partners in list_of_group_of_partners:
+                    if set(combination).issubset(set(previous_group_of_partners)):
+                        del(cpy[cpy.index(previous_group_of_partners)])
+                list_of_group_of_partners = cpy
+                list_of_group_of_partners += [combination]
+        number_of_partner -= 1
+    for group in list_of_group_of_partners:
+        for ambiguous_fact in group:
+            final_value_of_fact[ambiguous_fact] = "undetermined"
 
 
 def resolve():
