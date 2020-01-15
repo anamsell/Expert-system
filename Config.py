@@ -2,24 +2,20 @@ import string
 
 
 class Config:
-
-
     operation = []
     initials_facts = []
     queries = []
-    facts = dict.fromkeys(string.ascii_uppercase, 0)
-
+    facts = dict.fromkeys(string.ascii_uppercase, None)
+    branch = []
+    @staticmethod
+    def set_variable_value(variable_name, value):
+        Config.facts[variable_name] = value
 
     @staticmethod
-    def set_variable_value(variableName, value):
-        Config.facts[variableName] = value
+    def get_variable_value(variable_name):
+        variable = Config.facts.get(variable_name)
 
-    
-    @staticmethod
-    def get_variable_value(variableName):
-        variable = Config.facts.get(variableName)
-
-        if variable == None:
+        if variable is None:
             return -1
 
         return variable

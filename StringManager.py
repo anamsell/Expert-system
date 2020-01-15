@@ -9,10 +9,6 @@ def is_operand(string):
     return Regex.string_contains_pattern(string, "[A-Z]")
 
 
-def is_space(string):
-    return Regex.stringContainsPattern(string, "\s")
-    
-
 def is_opening_brace(string):
     return string == "("
 
