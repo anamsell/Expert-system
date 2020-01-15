@@ -3,7 +3,6 @@ import FileManager
 import Parser
 import Display
 from Solver import resolve
-from Config import Config
 
 
 def check_argument_number():

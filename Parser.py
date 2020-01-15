@@ -6,7 +6,7 @@ from OperationManagement.RPNCalculator import RPN
 
 
 def contains_multiple_implications(line):
-    occurences = Regex.occurences_of_pattern_in_string(line, "(=>)|(<=>)")
+    occurences = Regex.occurrences_of_pattern_in_string(line, "(=>)|(<=>)")
     return occurences > 1
 
 
@@ -15,7 +15,7 @@ def is_initial_facts(line):
 
 
 def is_queries(line):
-    return Regex.string_contains_pattern(line, "^\?[A-Z]*$")
+    return Regex.string_contains_pattern(line, "^\\?[A-Z]*$")
 
 
 def parse(file_lines):
