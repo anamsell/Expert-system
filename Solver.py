@@ -60,7 +60,7 @@ def resolve():
             fact_with_unknown_value += fact
     test_vars(starting_value_of_fact, fact_with_unknown_value)
     if not Config.branch:
-        Display.error("There is no solution for this")
+        Display.error("There is a contradiction in the rules")
     fill_result_with_easy_fact(final_value_of_fact, starting_value_of_fact)
     if starting_value_of_fact:
         fill_result_with_tricky_fact(starting_value_of_fact, final_value_of_fact)

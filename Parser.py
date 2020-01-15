@@ -51,7 +51,8 @@ def parse(file_lines):
         if index + 1 < len(file_lines):
             for index_comment, comment_line in enumerate(file_lines[index+1:]):
                 if len(Regex.string_replacing_with_pattern(comment_line, "\\s", "")) > 0:
-                    Display.warning("Queries are already fetched, line " + str(index + index_comment + 1) + " will not be interpreted.")
+                    if not Regex.string_start_with_pattern(comment_line, "\\s*#"):
+                        Display.warning("Queries are already fetched, line " + str(index + index_comment + 2) + " will not be interpreted.")
         break
     if not Config.queries:
         Display.error("There is no queries.")
